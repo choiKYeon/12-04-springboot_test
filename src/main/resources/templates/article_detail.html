@@ -1,0 +1,33 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-4">
+    <h4 class="border-bottom my-3 py-2" th:text="${article.subject}"></h4>
+    <div class="card">
+        <div class="card-body m-2">
+            <div class="card-text" th:text="${article.content}"></div>
+            <div class="d-flex justify-content-end">
+                <div th:if="${article.modifyDate != null}" class="badge bg-light text-dark p-2 text-start mx-3">
+                    <div class="mb-2">수정일자</div>
+                    <div th:text="${#temporals.format(article.modifyDate, 'yyyy-MM-dd HH:mm')}"></div>
+                </div>
+                <div class="badge bg-light text-dark">
+                    <div class="mb-2">
+                        <span th:if="${article.author != null}" th:text="${article.author.username}"></span>
+                    </div>
+                    <div th:text="${#temporals.format(article.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+                </div>
+            </div>
+            <div class="my-3">
+                <a th:href="@{|/article/modify/${article.id}|}" class="btn btn-sm btn-outline-secondary"
+                   sec:authorize="isAuthenticated()"
+                   th:if="${article.author != null and #authentication.getPrincipal().getUsername() == article.author.username}"
+                   th:text="수정"></a>
+                <a th:href="@{|/article/delete/${article.id}|}" onclick="return confirm('정말로 삭제하시겠습니까?')"
+                   class="delete btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
+                   th:if="${article.author != null and #authentication.getPrincipal().getUsername() == article.author.username}"
+                   th:text="삭제"></a>
+            </div>
+        </div>
+    </div>
+    <a th:href="@{/article/list}" class="btn btn-primary mt-3">목록</a>
+</div>
+</html>
