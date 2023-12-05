@@ -28,7 +28,7 @@ public class ArticleController {
     public String list(Model model, @RequestParam(value = "page", defaultValue = "0")int page,  @RequestParam(value = "kw", defaultValue = "") String kw){
         Page<Article> paging = this.articleService.getList(page, kw);
         model.addAttribute("paging", paging);
-        model.addAttribute("kw", kw);
+//        model.addAttribute("kw", kw);
         return "article_list";
     }
     @GetMapping("/create")

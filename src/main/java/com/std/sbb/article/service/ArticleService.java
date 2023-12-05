@@ -60,7 +60,7 @@ public class ArticleService {
             private static final long serialVersionUID = 1L;
             @Override
             public Predicate toPredicate(Root<Article> q, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                query.distinct(true);  // 중복을 제거
+                query.distinct(true);
                 Join<Article, SiteUser> u1 = q.join("author", JoinType.LEFT);
                 return cb.or(cb.like(q.get("subject"), "%" + kw + "%"),
                         cb.like(q.get("content"), "%" + kw + "%"),
